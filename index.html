@@ -5,11 +5,115 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="timer.js"></script>
-  
+    <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
 </head>
 <body>
+   
+        <div id="slider-range"></div>
+        <span class="slider-time">00:00:00</span>
+
+<input type="text" id="time">
+
+<div id="add-time">+</div>
+<div id="reduce-time">-</div>
+
   
 </body>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script >
+    'use strict';
+    class TimeSlider {
+        constructor(data) {
+            this.range = data.range;
+            this.min = data.min;
+            this.max = data.max;
+            this.step = data.step;
+            this.value = data.value;
+
+        }
+
+
+
+
+timeChange(){
+    let global = this;
+$("#add-time").click(function name(e) {
+
+    global.max = global.max+Number($('#time').val());
+    $('#slider-range').slider({ max: global.max ,    value: global.value});
+
+});
+
+
+}
+
+
+
+
+
+
+        slider() {
+
+let  {range, min , max ,step, value}  =  this;
+let global = this;
+            $('#slider-range').slider({
+                range: range,
+                min: min,
+                max: max,
+                step: step,
+                value: value,
+                slide: function (e, ui) {
+                    global.value = ui.value;
+
+
+                    let hours = '00',
+                        minutes = '00',
+                        seconds = '00';
+                    hours = Math.floor(ui.value / 3600);
+                    minutes = Math.floor((ui.value - (hours * 3600)) / 60);
+                    let secondsMainCount = Math.floor(ui.value / 60);
+                    seconds = ui.value - (secondsMainCount * 60);
+                    if (hours == 0) {
+                        hours = '00';
+                    }
+                    if (minutes == 0) {
+                        minutes = '00';
+                    }
+                    if (seconds == 0) {
+                        seconds = '00';
+                    }
+                    $('.slider-time').html(hours + ':' + minutes + ':' + seconds);
+                }
+            });
+
+
+
+
+           this.timeChange();
+
+
+        }
+
+
+
+
+test(){
+
+    return this;
+}
+
+
+    }
+    let slider = {
+        range: 'min',
+        min: 0,
+        // seconds
+        max: 3600,
+        step: 1,
+        value: 0,
+    }
+    let timeSlider = new TimeSlider(slider);
+    timeSlider.slider();
+</script>
 </html>
