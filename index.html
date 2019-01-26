@@ -6,18 +6,14 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-   
         <div id="slider-range"></div>
         <span class="slider-time">00:00:00</span>
-
 <input type="text" id="time">
-
-<div id="add-time">+</div>
-<div id="reduce-time">-</div>
-
-  
+<div id="add-time" class="btn btn-primary">+</div>
+<div id="reduce-time" class="btn btn-primary">-</div>
 </body>
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
@@ -30,34 +26,32 @@
             this.max = data.max;
             this.step = data.step;
             this.value = data.value;
-
+            this.sliderRange = $("#slider-range");
         }
-
-
-
-
 timeChange(){
     let global = this;
 $("#add-time").click(function name(e) {
-
     global.max = global.max+Number($('#time').val());
-    $('#slider-range').slider({ max: global.max ,    value: global.value});
-
+    global.sliderRange.slider({ max: global.max ,    value: global.value});
 });
-
-
+$("#reduce-time").click(function name(e) {
+let  reduceTime =  global.max-Number($('#time').val());
+    if(reduceTime>global.value){
+console.log('Place Reduce Slider value');
+/*
+If you  need  To  reduce  value of  max more than  selected  un comment bellow  line  
+*/
+//global.sliderRange.slider({value: global.value});
+    }else{
+    global.max = global.max-Number($('#time').val());
+    global.sliderRange.slider({ max: global.max ,    value: global.value});
+    }
+});
 }
-
-
-
-
-
-
         slider() {
-
 let  {range, min , max ,step, value}  =  this;
 let global = this;
-            $('#slider-range').slider({
+global.sliderRange.slider({
                 range: range,
                 min: min,
                 max: max,
@@ -65,8 +59,6 @@ let global = this;
                 value: value,
                 slide: function (e, ui) {
                     global.value = ui.value;
-
-
                     let hours = '00',
                         minutes = '00',
                         seconds = '00';
@@ -86,24 +78,11 @@ let global = this;
                     $('.slider-time').html(hours + ':' + minutes + ':' + seconds);
                 }
             });
-
-
-
-
            this.timeChange();
-
-
         }
-
-
-
-
 test(){
-
     return this;
 }
-
-
     }
     let slider = {
         range: 'min',
